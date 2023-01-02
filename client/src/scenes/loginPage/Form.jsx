@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "state";
 import Dropzone from "react-dropzone";
-import FlexBetween from "copmonents/FlexBetween";
+import FlexBetween from "components/FlexBetween";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -55,9 +55,9 @@ const Form = () => {
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
 
-  const register = async(values, onSubmitProps) => {
+  const register = async (values, onSubmitProps) => {
     const formData = new FormData();
-    for(let value in values) {
+    for (let value in values) {
       formData.append(value, values[value])
     }
     formData.append('picturePath', values.picture.name);
@@ -73,7 +73,7 @@ const Form = () => {
     const savedUser = await savedUserResponse.json();
     onSubmitProps.resetForm();
 
-    if(savedUser) {
+    if (savedUser) {
       setPageType("login");
     }
   }
@@ -83,14 +83,14 @@ const Form = () => {
       "http://localhost:3001/auth/login",
       {
         method: "POST",
-        headers: { "Content-Type" : "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       }
     )
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
 
-    if(loggedIn) {
+    if (loggedIn) {
       dispatch(
         setLogin({
           user: loggedIn.user,
